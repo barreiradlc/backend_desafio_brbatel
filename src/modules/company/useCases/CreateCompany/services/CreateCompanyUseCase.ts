@@ -1,7 +1,7 @@
 import { ICompaniesRepository } from "@modules/company/repositories/ICompanyRepository"
 import { ICreateCompanyRequestDTO } from "../CreateCompanyDTO"
 
-export class Service {
+export class CreateCompanyService {
 	constructor(
 		private companiesRepository: ICompaniesRepository
 	) {

@@ -1,26 +1,29 @@
 import { Request, Response } from "express";
-import { CreateCompanyService } from "./services/CreateCompanyUseCase";
+import { UpdateCompanyService } from "./services/UpdateCompanyUseCase";
 
-export class CreateCompanyController {
+export class UpdateCompanyController {
 	constructor(
-		private createCompanyUseCase: CreateCompanyService,
+		private updateCompanyUseCase: UpdateCompanyService,
 	) { }
 
 	async handle(request: Request, response: Response): Promise<Response> {
-		const { name,
+		const { 
+			id,
+			name,
 			cnpj,
 			anual_earnings,
 			about } = request.body
-
 		try {
-			const company = await this.createCompanyUseCase.execute({
+			
+			await this.updateCompanyUseCase.execute({
+				id,
 				name,
 				cnpj,
 				anual_earnings,
 				about
 			})
 
-			return response.json(company)
+			return response.status(201).send()
 		} catch (error) {
 			return response.status(400).json({
 				message: error.message || 'Unexpected error'

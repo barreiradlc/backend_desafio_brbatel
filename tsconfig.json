@@ -21,35 +21,11 @@
 		"forceConsistentCasingInFileNames": true,
 		"baseUrl": "./src",
 		"paths": {
-			"@controllers/*": [
-				"./controllers/*"
-			],
-			"@providers/*": [
-				"./providers/*"
-			],
-			"@repositories/*": [				
-				"./modules/**/repositories/**/*.ts"
-			],
-			"@Irepositories/*": [
-				"./modules/**/repositories/*.ts"			
-			],
-			"@models/*": [
-				"./models/*"
-			],
 			"@entities/*": [
 				"./modules/**/entities/*.ts"
 			],
-			"@config/*": [
-				"./config/*"
-			],
-			"@utils/*": [
-				"./utils/*"
-			],
 			"@modules/*": [
 				"./modules/*"
-			],
-			"@services/*": [
-				"./services/*"
 			]
 		}
 	},

@@ -1,11 +1,11 @@
 
 import { PostgresCompanyRepository } from "@modules/company/repositories/implementations/PostgresCompanyRepository";
 import { CreateCompanyController } from "./CreateCompanyController";
-import { Service } from "./services/CreateCompanyUseCase";
+import { CreateCompanyService } from "./services/CreateCompanyUseCase";
 
 const postgresCompanyRepository = new PostgresCompanyRepository()
 
-const createCompanyUseCase = new Service(
+const createCompanyUseCase = new CreateCompanyService(
 	postgresCompanyRepository,	
 )
 

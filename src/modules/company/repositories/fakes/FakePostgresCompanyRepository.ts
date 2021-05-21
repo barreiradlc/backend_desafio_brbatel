@@ -1,31 +1,48 @@
-import User from "@entities/User";
+import { Company } from "@modules/company/entities/Company"
+import { ICreateCompanyRequestDTO } from "@modules/company/useCases/CreateCompany/CreateCompanyDTO"
+import { ICompaniesRepository } from "../ICompanyRepository"
 
-import { ICreateUserRequestDTO } from "@modules/user/useCases/CreateUser/CreateUserDTO";
-import { ObjectID } from "mongodb";
 
-import { IUsersRepository } from "../IUsersRepository";
+export class FakePostgresCompanyRepository implements ICompaniesRepository {
+	private companies: Company[] = []
 
-class FakeMongoUsersRepository implements IUsersRepository {
-	private users: User[] = []
+  constructor(){}
 
-	async findByEmail(email: string): Promise<User> {
-		const findUser = this.users.find(u => u.email === email)
-		return findUser
+	async delete(id: string): Promise<void> {
+		this.companies = this.companies.filter(c => c.id !== id)
+		return
 	}
 
-	async save(user: User): Promise<void> {
+	async findById(id: string): Promise<Company> {
+		const findCompany = this.companies.find(company => company.id === id)
+		return findCompany
+	}
 
+	async findByCNPJ(cnpj: string): Promise<Company> {
+		const findCompany = this.companies.find(company => company.cnpj === cnpj)
+		return findCompany
+	}
+
+	async save(company: Company): Promise<Company> {
+		const newCompanies = this.companies.map((item: Company) => {
+			if(company.id === item.id){
+				return {
+					...company,
+					...item
+				}
+			}
+			return item
+		})
+		this.companies = newCompanies
+		return company
 	}
 	
-  async create(user: ICreateUserRequestDTO): Promise<User> {
-		const newUser = new User()
-		Object.assign(newUser, { id: new ObjectID(), ...user  })
+  async create(company: ICreateCompanyRequestDTO): Promise<Company> {
+		const newCompany = new Company()
+		Object.assign(newCompany, company )
 
-		this.users.push(newUser)
+		this.companies.push(newCompany)
 
-		return newUser
+		return newCompany
 	}
 }
-
-
-export { FakeMongoUsersRepository }
