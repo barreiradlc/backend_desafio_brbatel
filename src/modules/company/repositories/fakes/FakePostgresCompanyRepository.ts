@@ -1,5 +1,6 @@
 import { Company } from "@modules/company/entities/Company"
 import { ICreateCompanyRequestDTO } from "@modules/company/useCases/CreateCompany/CreateCompanyDTO"
+import { IListCompanyRequestDTO } from "@modules/company/useCases/ListCompany/IListCompanyDTO"
 import { ICompaniesRepository } from "../ICompanyRepository"
 
 
@@ -14,8 +15,17 @@ export class FakePostgresCompanyRepository implements ICompaniesRepository {
 	}
 
 	async findById(id: string): Promise<Company> {
-		const findCompany = this.companies.find(company => company.id === id)
-		return findCompany
+		const findCompany = this.companies.find(company => company.id === id);
+		return findCompany;
+	}
+	
+	async find({
+		page,
+		query,
+		take = 10
+	}: IListCompanyRequestDTO): Promise<Company[]> {
+		const findCompany = this.companies.filter(company => company.name.includes(query))
+		return findCompany.slice(page -1, take)
 	}
 
 	async findByCNPJ(cnpj: string): Promise<Company> {
@@ -26,6 +36,20 @@ export class FakePostgresCompanyRepository implements ICompaniesRepository {
 	async save(company: Company): Promise<Company> {
 		const newCompanies = this.companies.map((item: Company) => {
 			if(company.id === item.id){
+				return {
+					...company,
+					...item
+				}
+			}
+			return item
+		})
+		this.companies = newCompanies
+		return company
+	}
+	
+	async update(id: string, company: Company): Promise<Company> {
+		const newCompanies = this.companies.map((item: Company) => {
+			if(id === item.id){
 				return {
 					...company,
 					...item

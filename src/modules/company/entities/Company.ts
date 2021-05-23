@@ -1,9 +1,19 @@
 import { BaseEntity } from "@modules/shared/entities/BaseEntity";
+import { Column, Entity } from "typeorm";
 
+@Entity('companies')
 class Company extends BaseEntity {
+
+  @Column()
   name: string;
+
+  @Column()
   cnpj: string;
+
+  @Column()
   anual_earnings: IANUAL_EARNINGS;
+
+  @Column()
   about: string;
 }
 

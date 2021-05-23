@@ -9,14 +9,14 @@ export class UpdateCompanyService {
 	}
 
 	async execute(data: IUpdateCompanyRequestDTO) {
-		const companyAlreadyExists = await this.companiesRepository.findById(data.id)
+		let companyFound = await this.companiesRepository.findById(data.id)
 
-		if (!companyAlreadyExists) {
+		if (!companyFound) {
 			throw new Error("Company don't exists.")
 		}
 
-		const company = await this.companiesRepository.save(data)		
+		const updatedCompany = await this.companiesRepository.update(data.id, data)		
 
-		return company
+		return updatedCompany
 	}
 }

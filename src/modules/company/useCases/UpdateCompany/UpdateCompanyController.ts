@@ -13,9 +13,10 @@ export class UpdateCompanyController {
 			cnpj,
 			anual_earnings,
 			about } = request.body
-		try {
 			
-			await this.updateCompanyUseCase.execute({
+		try {
+
+			const company = await this.updateCompanyUseCase.execute({
 				id,
 				name,
 				cnpj,
@@ -23,7 +24,7 @@ export class UpdateCompanyController {
 				about
 			})
 
-			return response.status(201).send()
+			return response.json(company)
 		} catch (error) {
 			return response.status(400).json({
 				message: error.message || 'Unexpected error'

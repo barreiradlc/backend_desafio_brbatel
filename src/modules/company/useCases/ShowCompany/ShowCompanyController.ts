@@ -10,9 +10,9 @@ export class ShowCompanyController {
 		const { id } = request.params
 		
 		try {			
-			await this.showCompanyUseCase.execute(id)
+			const company = await this.showCompanyUseCase.execute(id)
 
-			return response.status(201).send()
+			return response.json(company)
 		} catch (error) {
 			return response.status(400).json({
 				message: error.message || 'Unexpected error'

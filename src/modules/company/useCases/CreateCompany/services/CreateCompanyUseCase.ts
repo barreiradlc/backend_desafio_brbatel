@@ -11,6 +11,8 @@ export class CreateCompanyService {
 	async execute(data: ICreateCompanyRequestDTO) {
 		const companyAlreadyExists = await this.companiesRepository.findByCNPJ(data.cnpj)
 
+		console.log(companyAlreadyExists)
+
 		if (companyAlreadyExists) {
 			throw new Error('Company already exists.')
 		}

@@ -1,17 +1,18 @@
 import { IANUAL_EARNINGS } from "@modules/company/entities/Company"
+import { FakePostgresCompanyRepository } from "@modules/company/repositories/fakes/FakePostgresCompanyRepository"
 import { PostgresCompanyRepository } from "@modules/company/repositories/implementations/PostgresCompanyRepository"
 import { CreateCompanyService } from "../../CreateCompany/services/CreateCompanyUseCase"
 import { ShowCompanyService } from "../services/ShowCompanyService"
 
 describe('SHOW COMPANY', () => {
-  it('Should be able to list a company', async () => {
-    const postgresCompanyRepository = new PostgresCompanyRepository()
+  it('Should be able to show a company', async () => {
+    const fakePostgresCompanyRepository = new FakePostgresCompanyRepository()
 
     const createCompany = new CreateCompanyService(
-      postgresCompanyRepository,
+      fakePostgresCompanyRepository,
     )
     const showCompany = new ShowCompanyService(
-      postgresCompanyRepository,
+      fakePostgresCompanyRepository,
     )
 
     const company = await createCompany.execute({

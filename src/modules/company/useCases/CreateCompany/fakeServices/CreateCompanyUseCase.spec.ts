@@ -1,14 +1,13 @@
 import { IANUAL_EARNINGS } from "@modules/company/entities/Company"
-import { PostgresCompanyRepository } from "@modules/company/repositories/implementations/PostgresCompanyRepository"
+import { FakePostgresCompanyRepository } from "@modules/company/repositories/fakes/FakePostgresCompanyRepository"
 import { CreateCompanyService } from "../services/CreateCompanyUseCase"
-
 
 describe('CREATE COMPANY', () => {
   it('Should be able to create a new company', async () => {
-    const postgresCompanyRepository = new PostgresCompanyRepository()
+    const fakePostgresCompanyRepository = new FakePostgresCompanyRepository()
 
     const createCompany = new CreateCompanyService(
-      postgresCompanyRepository,
+      fakePostgresCompanyRepository,
     )
 
     const company = await createCompany.execute({
@@ -23,10 +22,10 @@ describe('CREATE COMPANY', () => {
   })
 
   it('Should NOT be able to create a new duplicate company', async () => {
-    const postgresCompanyRepository = new PostgresCompanyRepository()
+    const fakePostgresCompanyRepository = new FakePostgresCompanyRepository()
 
     const createCompany = new CreateCompanyService(
-      postgresCompanyRepository,
+      fakePostgresCompanyRepository,
     )
 
     try {

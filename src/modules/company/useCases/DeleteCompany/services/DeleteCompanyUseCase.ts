@@ -16,6 +16,6 @@ export class DeleteCompanyService {
 
 		const company = await this.companiesRepository.delete(id)		
 
-		return company
+		return company;
 	}
 }

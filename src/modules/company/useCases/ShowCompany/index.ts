@@ -9,8 +9,8 @@ const showCompanyUseCase = new ShowCompanyService(
 	postgresCompanyRepository,	
 )
 
-const updateCompanyController = new ShowCompanyController(
+const showCompanyController = new ShowCompanyController(
 	showCompanyUseCase
 )
 
-export { showCompanyUseCase, updateCompanyController }
+export { showCompanyUseCase, showCompanyController }
