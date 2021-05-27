@@ -9,7 +9,7 @@ import { listCompanyController } from "./useCases/ListCompany";
 const companyRouter = Router();
 
 companyRouter.post('/', (request, response) => (createCompanyController.handle(request, response)));
-companyRouter.put('/', (request, response) => (updateCompanyController.handle(request, response)));
+companyRouter.put('/:id', (request, response) => (updateCompanyController.handle(request, response)));
 
 companyRouter.delete('/:id', (request, response) => (deleteCompanyController.handle(request, response)));
 companyRouter.get('/:id', (request, response) => (showCompanyController.handle(request, response)));

@@ -1,9 +1,10 @@
 import { ICreateCompanyRequestDTO } from "@modules/company/useCases/CreateCompany/CreateCompanyDTO"
 import { EntityRepository, getRepository, ILike, Like, Raw, Repository } from "typeorm"
-import { ICompaniesRepository } from "../ICompanyRepository"
+import { ICompaniesRepository, IPaginatedCompanies } from "../ICompanyRepository"
 import { Company, IANUAL_EARNINGS } from "@modules/company/entities/Company"
 import { OPENSSL_VERSION_NUMBER } from "constants"
 import { IListCompanyRequestDTO } from "@modules/company/useCases/ListCompany/IListCompanyDTO"
+
 
 @EntityRepository(Company)
 export class PostgresCompanyRepository implements ICompaniesRepository{
@@ -28,20 +29,24 @@ export class PostgresCompanyRepository implements ICompaniesRepository{
 		page,
 		query,
 		take = 10
-	}: IListCompanyRequestDTO): Promise<Company[]> {
+	}: IListCompanyRequestDTO): Promise<IPaginatedCompanies> {
 
-		console.log(page, take)
-		console.log((page * take) - take)
-
-		const findCompanies = await this.ormRepository.find({
+		console.log({page, query, take})
+		
+		const [findCompanies, total] = await this.ormRepository.findAndCount({
 			where: {
-				name: ILike(`${query}%`)
+				name: ILike(`${query || ''}%`)
 			},
 			take,
 			skip: (page * take) - take				
 		})
+		
+		console.log(findCompanies.length, 'Found')
 
-		return findCompanies
+		return {
+			nodes: findCompanies,
+			total
+		}
 	}
 
 	async findByCNPJ(cnpj: string): Promise<Company> {
@@ -75,6 +80,14 @@ export class PostgresCompanyRepository implements ICompaniesRepository{
 		name
 	}: Company): Promise<Company> {
 
+		console.log({
+			id,
+			about,
+			anual_earnings,
+			cnpj,
+			name	
+		})
+
 		const updatedCompany = await this.ormRepository.save({
 			id,
 			about,
@@ -99,7 +112,6 @@ export class PostgresCompanyRepository implements ICompaniesRepository{
 			cnpj,
 			name 
 		})
-		console.log({newCompany})
 
 		await this.ormRepository.save(newCompany)
 

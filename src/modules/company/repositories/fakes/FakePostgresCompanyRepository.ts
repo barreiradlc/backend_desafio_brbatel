@@ -1,7 +1,7 @@
 import { Company } from "@modules/company/entities/Company"
 import { ICreateCompanyRequestDTO } from "@modules/company/useCases/CreateCompany/CreateCompanyDTO"
 import { IListCompanyRequestDTO } from "@modules/company/useCases/ListCompany/IListCompanyDTO"
-import { ICompaniesRepository } from "../ICompanyRepository"
+import { ICompaniesRepository, IPaginatedCompanies } from "../ICompanyRepository"
 
 
 export class FakePostgresCompanyRepository implements ICompaniesRepository {
@@ -23,9 +23,12 @@ export class FakePostgresCompanyRepository implements ICompaniesRepository {
 		page,
 		query,
 		take = 10
-	}: IListCompanyRequestDTO): Promise<Company[]> {
-		const findCompany = this.companies.filter(company => company.name.includes(query))
-		return findCompany.slice(page -1, take)
+	}: IListCompanyRequestDTO): Promise<IPaginatedCompanies> {
+		const findCompanies = this.companies.filter(company => company.name.includes(query)).slice(page -1, take)
+		return {
+			nodes: findCompanies,
+			total: findCompanies.length
+		}
 	}
 
 	async findByCNPJ(cnpj: string): Promise<Company> {

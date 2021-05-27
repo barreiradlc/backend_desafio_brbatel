@@ -18,6 +18,11 @@ export class CreateCompanies1621719135364 implements MigrationInterface {
                         type: 'varchar'
                     },
                     {
+                        name: 'thumbnail',
+                        type: 'varchar',
+                        isNullable: true
+                    },
+                    {
                         name: 'cnpj',
                         type: 'varchar',
                         isUnique: true
@@ -28,7 +33,8 @@ export class CreateCompanies1621719135364 implements MigrationInterface {
                     },
                     {
                         name: 'about',
-                        type: 'varchar'
+                        type: 'varchar',
+                        isNullable: true
                     },
                 ]
             })

@@ -7,8 +7,8 @@ export class UpdateCompanyController {
 	) { }
 
 	async handle(request: Request, response: Response): Promise<Response> {
+		const { id } = request.params
 		const { 
-			id,
 			name,
 			cnpj,
 			anual_earnings,
