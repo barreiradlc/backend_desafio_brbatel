@@ -7,7 +7,7 @@ export class FindUserController {
 	) { }
 
 	async handle(request: Request, response: Response): Promise<Response> {
-		const { email, password } = request.body
+		const { email } = request.body
 
 		try {
 			const user = await this.findUserUseCase.execute(email)

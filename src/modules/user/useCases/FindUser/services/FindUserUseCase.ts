@@ -1,4 +1,5 @@
 import { IUserRepository } from "@modules/user/repositories/IUserRepository"
+import { classToClass } from "class-transformer"
 
 export class FindUserService {
 	constructor(
@@ -9,6 +10,6 @@ export class FindUserService {
 
 	async execute(email: string) {
 		const user = await this.usersRepository.findByEmail(email)
-		return user
+		return classToClass(user)
 	}
 }

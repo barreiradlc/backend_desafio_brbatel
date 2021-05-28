@@ -1,5 +1,6 @@
 import { BaseEntity } from "../../shared/entities/BaseEntity";
 import { Column, Entity } from "typeorm";
+import { Exclude } from "class-transformer";
 
 @Entity('users')
 class User extends BaseEntity {
@@ -14,6 +15,7 @@ class User extends BaseEntity {
   email: string;
 
   @Column()
+  @Exclude()
   password: string;
 
 }

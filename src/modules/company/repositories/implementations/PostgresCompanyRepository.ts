@@ -29,9 +29,7 @@ export class PostgresCompanyRepository implements ICompaniesRepository{
 		page,
 		query,
 		take = 10
-	}: IListCompanyRequestDTO): Promise<IPaginatedCompanies> {
-
-		console.log({page, query, take})
+	}: IListCompanyRequestDTO): Promise<IPaginatedCompanies> {		
 		
 		const [findCompanies, total] = await this.ormRepository.findAndCount({
 			where: {
@@ -41,8 +39,6 @@ export class PostgresCompanyRepository implements ICompaniesRepository{
 			skip: (page * take) - take				
 		})
 		
-		console.log(findCompanies.length, 'Found')
-
 		return {
 			nodes: findCompanies,
 			total
@@ -78,15 +74,7 @@ export class PostgresCompanyRepository implements ICompaniesRepository{
 		anual_earnings,
 		cnpj,
 		name
-	}: Company): Promise<Company> {
-
-		console.log({
-			id,
-			about,
-			anual_earnings,
-			cnpj,
-			name	
-		})
+	}: Company): Promise<Company> {	
 
 		const updatedCompany = await this.ormRepository.save({
 			id,
@@ -94,7 +82,7 @@ export class PostgresCompanyRepository implements ICompaniesRepository{
 			anual_earnings,
 			cnpj,
 			name	
-		})	
+		})
 
 		return updatedCompany
 	}

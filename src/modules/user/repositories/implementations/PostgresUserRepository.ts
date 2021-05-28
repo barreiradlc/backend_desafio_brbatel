@@ -26,7 +26,7 @@ export class PostgresUserRepository implements IUserRepository{
 		})
 
 		await this.ormRepository.save(user)
-		
+
 		return user
 	}
 
