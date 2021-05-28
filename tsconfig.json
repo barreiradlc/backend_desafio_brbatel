@@ -26,6 +26,9 @@
 			],
 			"@modules/*": [
 				"./modules/*"
+			],
+			"@config/*": [
+				"./config/*"
 			]
 		}
 	},

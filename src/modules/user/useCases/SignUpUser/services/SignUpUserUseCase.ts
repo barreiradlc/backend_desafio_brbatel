@@ -18,7 +18,7 @@ export class SignUpService {
 
 		const hashedPassword = data.password && await hash(String(data.password), 8)
 
-		const user = await this.usersRepository.signUp({
+		const user = await this.usersRepository.create({
 			...data,
 			password: hashedPassword
 		})		

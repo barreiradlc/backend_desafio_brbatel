@@ -11,19 +11,21 @@ export class PostgresUserRepository implements IUserRepository{
 		this.ormRepository = getRepository(User)
 	}
 	
-
-  async signUp({
+  async create({
 		name,
 		username,
 		email,
 		password
 	}: ISignUpRequestDTO): Promise<User> {
+
 		const user = await this.ormRepository.create({
 			name,
 			username,
 			email,
 			password
 		})
+
+		await this.ormRepository.save(user)
 		
 		return user
 	}
@@ -31,7 +33,7 @@ export class PostgresUserRepository implements IUserRepository{
 	async findByEmail(
 		email: string
 	): Promise<User> {
-		const user = this.ormRepository.findOne({ email })
+		const user = await this.ormRepository.findOne({ email })
 		return user
 	}
 

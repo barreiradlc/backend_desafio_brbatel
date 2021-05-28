@@ -7,7 +7,7 @@ import { ISignUpRequestDTO } from "@modules/user/useCases/SignUpUser/ISignUpUser
 export class FakePostgresUserRepository implements IUserRepository{
 	private users: User[] = []	
 
-  async signUp({
+  async create({
 		name,
 		username,
 		email,
